@@ -1,0 +1,33 @@
+{% for item in menu %}
+
+    <li class="nav-all pull-right full-subnav-wrapper">
+        <a href="{{ item.link }}" {% if item.title is defined %}title='{{ item.title|escape }}'{% endif %}
+           class='{% if item.class is defined %}{{item.class}}{% endif %}' data-toggle="li">
+            <span class="text">{{item.label}}</span>
+            <span class="toggle glyphicon glyphicon-align-justify"></span>
+        </a>
+
+        {% if item.submenu is defined %}
+            <div class="row subnav-wrapper">
+                <div class="col-md-2 col-sm-2 {% if loop.first %}bg-bar{% endif %}">
+                {# add submenu header
+                <strong class="subnav-header">S</strong>
+                #}
+                    <ul class="subnav-full">
+                    {% for item in item.submenu %}
+                        {% if item.label is defined %}
+                            <li class="{% if loop.first %} first{% endif %}{% if loop.last %} last{% endif %}{% if item|current %} active{% endif %}">
+                                <a href="{{ item.link }}" {% if item.title is defined %}title='{{ item.title|escape }}'{% endif %}
+                                   class='{% if item.class is defined %}{{item.class}}{% endif %}'>
+                                    {{item.label}}
+                                </a>
+                            </li>
+                        {% endif %}
+                    {% endfor %}
+                    </ul>
+                </div>
+            </div>
+        {% endif %}
+    </li>
+
+{% endfor %}
