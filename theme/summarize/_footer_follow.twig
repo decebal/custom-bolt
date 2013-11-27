@@ -1,0 +1,7 @@
+<h4 class="widget-title">Follow Us</h4>
+
+<ul class="entries links">
+	{% for item in followlinks %}
+	<li><a href="{{ item.link }}"><i class="{% if item.class is defined %}{{item.class}}{% endif %}"></i> {{item.label}}</a></li>
+	{% endfor %}
+</ul>
