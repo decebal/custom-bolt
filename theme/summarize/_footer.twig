@@ -16,28 +16,36 @@
 
             </div><!--/.col-3-->
 
+            <div class="clearfix visible-xs"></div>
+
             <div class="widget col-xs-6 col-sm-2">
                 {{ menu('main', '_footer_follow.twig') }}
             </div><!--/.col-3-->
 
-        </div>
-    </div>
-</footer>
+            <div class="widget col-xs-12 col-sm-4">
 
+                <h4 class="widget-title">Subscribe</h4>
 
-<footer class="row">
-    <div class="twelve columns">
-        <hr />
-        <div class="row">
-            <div class="six columns">
-                <p>{{ __("This website is <a href='%url%' target='_blank' title='Sophisticated, lightweight & simple CMS'>Built with Bolt</a>.",{'%url%':'http://bolt.cm'}) }}
-                </p>
-            </div>
-            <div class="six columns">
-                <ul class="link-list right">
-                    {{ menu() }}
-                </ul>
-            </div>
+                <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="subscribeEmail" class="col-lg-2 control-label">EMAIL</label>
+                        <div class="col-lg-10">
+                            <input type="text" class="form-control" id="subscribeEmail" placeholder="Your Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-lg-2 control-label">RSS</label>
+                        <div class="col-lg-10">
+                            <p class="form-control-static">
+                                <a href=""><i class="icon-rss-sign"></i> Posts</a> &nbsp; &nbsp;
+                                <a href=""><i class="icon-rss-sign"></i> Comments</a>
+                            </p>
+                        </div>
+                    </div>
+                </form>
+
+            </div><!--/.col-3-->
+            
         </div>
     </div>
 </footer>
