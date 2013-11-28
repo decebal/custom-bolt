@@ -19,20 +19,16 @@
     {# paths.theme is always a correct path to the current theme. Even if you rename the theme-folder,
        this will keep working. See the documentation on paths: http://docs.bolt.cm/internals#paths #}
     <link rel="stylesheet" href="{{ paths.theme }}vendor/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="{{ paths.theme }}font-awesome/css/font-awesome.min.css">
-    <link rel="stylesheet" href="{{ paths.theme }}prettyPhoto/css/prettyPhoto.css">
+    <link rel="stylesheet" href="{{ paths.theme }}vendor/font-awesome/css/font-awesome.min.css">
+    <link rel="stylesheet" href="{{ paths.theme }}vendor/prettyPhoto/css/prettyPhoto.css">
 
     <link rel="stylesheet" href="{{ paths.theme }}css/base.css">
-    <link rel="stylesheet" href="{{ paths.theme }}css/compontents.css">
+    <link rel="stylesheet" href="{{ paths.theme }}css/components.css">
 
     <link rel="stylesheet" href="{{ paths.theme }}colorschemes/default.css">
+    <link rel="stylesheet" type="text/css" href="{{ paths.app }}view/lib/fancybox/jquery.fancybox.css">
 
     <script src="{{ paths.theme }}vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
-
-    {# Bolt comes with Fancybox, as it's used in the backend. We can use it here, or
-       you just swap it out for the image-viewing script of your choice. Or delete it altogether #}
-    <script src="{{ paths.app }}view/lib/fancybox/jquery.fancybox.pack.js"></script>
-    <link rel="stylesheet" type="text/css" href="{{ paths.app }}view/lib/fancybox/jquery.fancybox.css">
 
 </head>
 <body>
@@ -59,14 +55,18 @@
         </div>
 
         <ul class="nav nav-pages hidden-xs">
-            {{ menu('main', '_sub_menu.twig') }}
+            {{ menu('header', '_sub_menu.twig') }}
         </ul>
 
-        {# Icons for menu can come in here
+        
         <ul class="nav nav-icons">
-            {% include '_sub_icons.twig' %}
+            <li>
+                <a href="#" class="btn-icon" data-toggle=".header-navbar-inner" data-toggle-class="search-toggled-in">
+                    <span class="search-toggled-out-icon glyphicon glyphicon-search"></span>
+                    <span class="search-toggled-in-icon glyphicon glyphicon-remove"></span>
+                </a>
+            </li>
         </ul>
-        #}
 
         <div class="search-wrapper js-stoppropagation">
             {% include '_sub_searchbox.twig' %}
@@ -74,7 +74,7 @@
 
         {# Secondary menu
         <ul class="nav navbar-nav">
-            {{ menu('main', '_sub_submenu.twig') }}
+            {{ menu('secondary', '_sub_submenu.twig') }}
         </ul>
         #}
                 
