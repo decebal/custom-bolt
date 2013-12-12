@@ -1,9 +1,8 @@
 {# This file is inserted as the 'footer' of each listed record. #}
-<h6>
-    {% set recdate = record.datepublish|localdate("%A %B %e, %Y") %}
-    {{ __('Written by <em>%name%</em> on %date%',{ '%name%': record.user.displayname, '%date%': recdate }) }} <br>
-    <a href="{{ record.link }}">{{ __('Permalink') }}</a> -
-    {# include the 'default' links to taxonomies. Check the documentation for ways to modify and customize
-       what is output to the browser: http://docs.bolt.cm/taxonomies#taxonomies #}
-    {% include '_sub_taxonomylinks.twig' with {record: record} %}
-</h6>
+<div class="entry-meta indented">
+	{% set recdate = record.datepublish|localdate("%A %B %e, %Y") %}
+	<span class="author">by <a href="{{ paths.root }}">{{ record.user.displayname }}</a></span>
+	<span class="entry-date"><a href="{{ paths.root }}">on <time datetime="{{ record.datepublish }}">{{ recdate }}</time></a></span>
+	{# {% include '_sub_taxonomylinks.twig' with {record: record} %} #}
+	{#<span class="category">In <a href="blog.html">Social Media</a></span>#}
+</div>

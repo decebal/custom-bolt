@@ -8,20 +8,22 @@
     <div class="footer-top container">
 
         <div class="row">
-
+            
+            {#
             <div class="widget col-xs-12 col-sm-4">
 
                 <h4 class="widget-title">Categories</h4>
 
                 <ul class="entries links links-2-cols">
-                    {# {{ menu('categories', '_sub_menu.twig') }} #}
+                    {{ menu('categories', '_sub_menu.twig') }}
                 </ul>
 
             </div><!--/.col-3-->
 
             <div class="clearfix visible-xs"></div>
+            #}
 
-            <div class="widget col-xs-6 col-sm-2">
+            <div class="widget col-xs-6 col-sm-6">
 
                 <h4 class="widget-title">Information</h4>
 
@@ -54,6 +56,7 @@
                             <input type="text" class="form-control" id="subscribeEmail" placeholder="Your Email">
                         </div>
                     </div>
+                    {#
                     <div class="form-group">
                         <label class="col-lg-2 control-label">RSS</label>
                         <div class="col-lg-10">
@@ -63,6 +66,7 @@
                             </p>
                         </div>
                     </div>
+                    #}
                 </form>
 
             </div><!--/.col-3-->

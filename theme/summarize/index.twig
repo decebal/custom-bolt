@@ -2,90 +2,139 @@
 
 <!-- Main Page Content and Sidebar -->
 
-<div class="row">
-
     <!-- Main Blog Content -->
-    <div class="eight columns" role="content">
+    {# @todo list search results and taxonomy options here in small thumbs
+    <div class="section row entries bg-primary section-no-margin-bottom"
 
-        <article>
+        {% if taxonomytype is defined %}
+            <h1>
+                {{ __('Overview for') }}
+                {% if taxonomy.options[slug] is defined %}
+                    {{ taxonomy.options[slug] }}
+                {% else %}
+                    {{ slug }}
+                {% endif %}
+            </h1>
+        {% endif %}
 
-            {# use 'setcontent' to set the variable 'home' to "page/1", which is
-               shorthand for "the record in Pages, with id 1". #}
-            {% setcontent home = "page/1" %}
-            {% if home.title is defined and home.title is not empty %}
-                <h1>{{ home.title }}</h1>
-            {% endif %}
 
-            {% if home.image is defined and home.image is not empty %}
-                <div class="five columns imageholder">
-                    <a href="{{ image(home.image) }}">
-                        <img src="{{ thumbnail(home.image, 400, 260) }}">
-                    </a>
-                </div>
-            {% endif %}
+        {% if search is defined %}
+            <h1>
+                {{ __('Search results for <b> %search% </b>.', { '%search%': search|escape }) }}
+            </h1>
+        {% endif %}
+    </div>
+    #}
 
-            {# display something introduction-like.. #}
-            {% if home.introduction is defined and home.introduction is not empty %}
-                {{ home.introduction }}
-            {% elseif home.teaser is defined and home.teaser is not empty %}
-                {{ home.teaser }}
-            {% elseif home is not empty %}
-                <p>{{ home.excerpt(500) }}</p>
-            {% endif %}
+<div id="content" class="content section row">
 
-            {% if home.link is defined and home.link is not empty %}
-                <a href="{{ home.link }}">Read more &raquo;</a>
-            {% endif %}
+    <div class="col-md-8 bg-base col-lg-8 col-xl-9">
+        {# @todo Add category/chapters #}
+        <div class="ribbon ribbon-highlight">
+            <ol class="breadcrumb ribbon-inner">
+                <li><a href="{{ paths.root }}">Home</a></li>
+                {#<li><a href="">Features</a></li>#}
+                {#<li class="active"></li>#}
+            </ol>
+        </div>
 
-            {# Tip: If you're curious what all of the available fields of this
-               record contain, just use {{ print(home) }}, to print it all. #}
-
-        </article>
-
-        <hr>
-
-        <h4>{{ __('Latest entries') }}</h4>
-
-        {# Here we use 'setcontent' to set the variable 'records' to "entries/latest/6",
-           which is shorthand for "the 6 latest records in Entries. Note that we are
-           requesting multiple entries, so 'records' will be an array containing each
-           of the entries. That's why we use the 'for' loop to iterate over them all. #}
-        {% setcontent records = "entries/latest/6" allowpaging %}
+        <div class="entries">
         {% for record in records %}
-            <article>
+            <article class="entry style-media media type-post">
 
                 {% if record.image!="" %}
-                    <div class="three columns imageholder">
-                        <a href="{{ image(record.image) }}">
-                            <img src="{{ thumbnail(record.image, 400, 260) }}">
-                        </a>
-                    </div>
+                    <figure class="media-object pull-left entry-thumbnail hidden-xs">
+
+                        <!-- to disable lazy loading, remove data-src and data-src-retina -->
+                        <img src="{{ thumbnail(record.image, 400, 260) }}" data-src="{{ thumbnail(record.image, 230, 230) }}" data-src-retina="{{ thumbnail(record.image, 230, 230) }}" width="230" height="230" class="" alt="{{ record.title }}">
+
+                        <!--fallback for no javascript browsers-->
+                        <noscript>
+                            <img src="{{ thumbnail(record.image, 400, 260) }}" alt="{{ record.title }}">
+                        </noscript>
+
+                    </figure>
                 {% endif %}
 
-                <h3><a href="{{ record.link }}">{{ record.title }}</a></h3>
+                <div class="media-body">
+                    <header class="entry-header">
+                        <h3 class="entry-title">
+                            <a href="{{ record.link }}" rel="bookmark">{{ record.title }}</a>
+                        </h3>
 
-                <p>{{ record.excerpt(220) }}</p>
+                        <div class="entry-meta">
+                            {% set recdate = record.datepublish|localdate("%A %B %e, %Y") %}
+                            <span class="author">by <a href="{{ paths.root }}">{{ record.user.displayname }}</a></span>
+                            <span class="entry-date"><a href="{{ paths.root }}">{{ __('on %date%',{ '%date%': recdate }) }}</a></span>
+                            {#<span class="category">In <a href="{{ paths.root }}">Category</a></span>#}
+                        </div>
+                    </header>
+
+                    <h2><a href="{{ record.link }}">{{ record.title }}</a></h2>
+                    {% if record.introduction %}
+                        <p>
+                            {{ record.introduction }}
+                            <a href="{{ record.link }}" class="more-link">Continue Reading<i class="icon icon-long-arrow-right"></i></a>
+                        </p>
+                    {% elseif record.teaser %}
+                        <p>
+                            {{ record.teaser }}
+                            <a href="{{ record.link }}" class="more-link">Continue Reading<i class="icon icon-long-arrow-right"></i></a>
+                        </p>
+                    {% else %}
+                        <p>
+                            {{ record.excerpt(300) }}
+                            <a href="{{ record.link }}" class="more-link">Continue Reading<i class="icon icon-long-arrow-right"></i></a>
+                        </p>
+                    {% endif %}
+
+                    {# {% include '_recordfooter.twig' with {record: record} %} #}
+                </div>
 
             </article>
 
             <hr>
 
+        {% else %}
+            <article class="entry style-media media type-post">
+
+                {% if search is defined %}
+
+                    <p>
+                        {{ __("No results found for '%search%'. Please try another search.", { '%search%': search|escape }) }}
+                    </p>
+
+                {% else %}
+
+                    <div class="media-body">
+
+                        <h2>No content found</h2>
+
+                        <p>
+                            Unfortunately, no content could be found. Try another page, or go to the
+                            <a href="{{ paths.root }}">homepage</a>.
+                        </p>
+
+                    </div>
+
+                {% endif %}
+
+            </article>
         {% endfor %}
+        </div>
 
-        {{ records|last.title }}
-
-
+        {# @todo add class "pagination" to <ul> #}
         {{ pager() }}
 
 
     </div>
 
     <!-- End Main Content -->
-    {# include the sidebar. The include tag can be used to break up your templates in logical parts,
-       and re-use them across different templates/pages. #}
+
     {% include '_aside.twig' %}
 
-</div>
+</div><!--/#content-->
+
 
 <!-- End Main Content and Sidebar -->
 
