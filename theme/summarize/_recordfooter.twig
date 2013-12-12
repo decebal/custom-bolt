@@ -1,0 +1,8 @@
+{# This file is inserted as the 'footer' of each listed record. #}
+<div class="entry-meta indented">
+	{% set recdate = record.datepublish|localdate("%A %B %e, %Y") %}
+	<span class="author">by <a href="{{ paths.root }}">{{ record.user.displayname }}</a></span>
+	<span class="entry-date"><a href="{{ paths.root }}">on <time datetime="{{ record.datepublish }}">{{ recdate }}</time></a></span>
+	{# {% include '_sub_taxonomylinks.twig' with {record: record} %} #}
+	{#<span class="category">In <a href="blog.html">Social Media</a></span>#}
+</div>
