@@ -1,0 +1,88 @@
+<!-- Sidebar -->
+<div class="sidebar col-md-4 col-lg-4 col-xl-3">
+    <aside class="widget">
+
+        <div class="panel">
+            {# The next section attempts to fill the panel in the sidebar with part of the
+               'about'-page, if it exists. First, attempt to fetch a page with slug 'about' #}
+            {% setcontent about = "page/about" %}
+
+            {# check if we have a title. If so, we know we have a page. Otherwise, still
+               print a text, telling us to create the 'about' page. #}
+            {% if about.title is defined %}
+
+                <h5 class="widget-title ribbon"><span>{{ about.title }}</span></h5>
+                <div class="entries row">
+                  <article class="type-post style-media-list media col-sm-6 col-md-12">
+                    <div class="media-body">
+                      {{ about.teaser }}
+                      <div class="entry-meta">
+                        <a href="{{ about.link }}">{{ __('Read more') }} &raquo;</a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
+            {% else %}
+                <h5 class="widget-title ribbon"><span>{{ __('Alas, no about!') }}</span></h5>
+                <div class="entries row">
+                  <article class="type-post style-media-list media col-sm-6 col-md-12">
+                    <div class="media-body">
+                      {{ __("If there was a Page with 'about' for a slug, it would've been shown here. But there isn't one, so that's why you're seeing this placeholder.") }}
+                      <div class="entry-meta">
+                        <a href="{{ about.link }}">{{ __('Read more') }} &raquo;</a>
+                      </div>
+                    </div>
+                  </article>
+                </div>
+
+            {% endif %}
+
+        </div>
+    </aside>
+  
+    {% for ct in app.config.get('contenttypes') %}
+
+    {# Display only posts in this section for now#}
+    {% if ct.name == 'Posts' %}
+    {% setcontent records = ct.slug ~ "/latest/5" %}
+
+    <aside class="widget">
+    
+        <h5 class="widget-title ribbon"><span>What's Hot</span></h5>
+        <div class="entries row">
+            {% for record in records %}
+              <article class="type-post style-media-list media col-sm-6 col-md-12">
+
+                    {# Add images here
+                    <!-- to disable lazy loading, remove data-src and data-src-retina -->
+                    <img src="../img/placeholder.gif" data-src="http://placehold.it/80x80" data-src-retina="http://placehold.it/160x160" width="80" height="80" class="media-object pull-left" alt="">
+
+                    <!--fallback for no javascript browsers-->
+                    <noscript>
+                      <img src="http://placehold.it/80x80" alt="">
+                    </noscript>
+                    #}
+
+                    <div class="media-body">
+                      <h6  class="entry-title">
+                        <a href="{{ record.link }}" rel="bookmark">{{ record.title }}</a>
+                      </h6>
+                    </div>
+
+              </article>
+            {% else %}
+              <article class="type-post style-media-list media col-sm-6 col-md-12">
+                <div class="media-body">
+                  <h6  class="entry-title">
+                    {{ __('No recent %contenttype%.',{'%contenttype%': ct.singular_name }) }}
+                  </h6>
+                </div>
+              </article>
+            {% endfor %}
+        </div>
+    </aside>
+    {% endif %}
+    {% endfor %}
+</div>
+<!-- End Sidebar -->
