@@ -24,6 +24,7 @@
 
     <link rel="stylesheet" href="{{ paths.theme }}css/base.css">
     <link rel="stylesheet" href="{{ paths.theme }}css/components.css">
+    <link rel="stylesheet" href="{{ paths.theme }}css/customize.css">
 
     <link rel="stylesheet" href="{{ paths.theme }}colorschemes/default.css">
     <link rel="stylesheet" type="text/css" href="{{ paths.app }}view/lib/fancybox/jquery.fancybox.css">
@@ -43,7 +44,8 @@
         <div class="header-navbar-inner container">
             <div id="brand" class="navbar-brand">
                 <a href="{{ paths.root }}" rel="bookmark">
-
+                   {#
+    
                     <!-- to disable lazy loading, remove data-src and data-src-retina -->
                     <img src="{{ paths.theme }}img/logo.png" data-src="{{ paths.theme }}img/logo.png" data-src-retina="{{ paths.theme }}img/logo-retina.png" width="244" height="56" alt="">
 
@@ -51,6 +53,11 @@
                     <noscript>
                         <img src="{{ paths.theme }}img/logo.png" alt="">
                     </noscript>
+                    #}
+                    <span class="logo">
+                        {{ app.config.get('general/sitename') }}
+                    </span>
+
                 </a>
         </div>
 

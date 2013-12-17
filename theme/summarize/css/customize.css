@@ -1,0 +1,9 @@
+.header-navbar .navbar-brand a{
+	text-align: center;
+	text-decoration: none;
+}
+.header-navbar .navbar-brand a span.logo{
+	display: block;
+	vertical-align: middle;
+	padding: 20px;
+}
