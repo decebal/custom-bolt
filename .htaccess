@@ -15,7 +15,7 @@ Options -Indexes
   RewriteRule cache/ - [F]
 
   # Some servers require the RewriteBase to be set. If so, set to the correct folder.
-   RewriteBase /
+  # RewriteBase /
 
   RewriteCond %{REQUEST_FILENAME} !-f
   RewriteCond %{REQUEST_FILENAME} !-d
@@ -27,4 +27,7 @@ Options -Indexes
   RewriteRule ^ ./index.php [L]
 
 </IfModule>
+<Files ~ "\.php$">
+    ErrorDocument 404 /404.php
+</Files>
 
