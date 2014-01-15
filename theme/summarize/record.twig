@@ -49,6 +49,11 @@
                     </h3>
                 {% endif %}
 
+	        {{ facebooklike() }}
+		<br />
+            
+        	{{ twitterbutton() }}
+
             </header>
 
             <article class="entry style-single style-single-full type-post col-md-10 col-md-offset-1">
@@ -139,10 +144,9 @@
             {% endfor %}
 
             </article>
-            
-            {{ facebooklike() }}
-            
-            {{ twitterbutton() }}
+            <div id="comments" class="comments-area indented">    
+	        {{ facebookcomments( record.title ) }}
+	    </div>
 
             {# Uncomment this if you wish to dump the entire record to the client, for debugging purposes.
             {{ print(record) }}
@@ -150,7 +154,6 @@
             
         </div>
         
-        {{ facebookcomments( record.title ) }}
 
 
     </div>
