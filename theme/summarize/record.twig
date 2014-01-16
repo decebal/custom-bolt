@@ -144,8 +144,10 @@
             {% endfor %}
 
             </article>
-            <div id="comments" class="comments-area indented">    
-	        {{ disqus( record.title ) }}
+	    <div class="col-md-10 col-md-offset-1">
+		    <div id="comments" class="comments-area indented">    
+			{{ disqus( record.title ) }}
+		    </div>
 	    </div>
 
             {# Uncomment this if you wish to dump the entire record to the client, for debugging purposes.
