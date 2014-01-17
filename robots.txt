@@ -1,4 +1,4 @@
 User-agent: *
-Disallow: *
-#Disallow: /app/
-#Disallow: /vendor/
+#Disallow: *
+Disallow: /app/
+Disallow: /vendor/
