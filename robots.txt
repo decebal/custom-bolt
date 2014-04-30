@@ -1,3 +1,5 @@
 User-agent: *
+
 Disallow: /app/
 Disallow: /vendor/
+Sitemap: http://decebalonprogramming.net/sitemap.xml

@@ -49,6 +49,11 @@
                     </h3>
                 {% endif %}
 
+	        {{ facebooklike() }}
+		<br />
+            
+        	{{ twitterbutton() }}
+
             </header>
 
             <article class="entry style-single style-single-full type-post col-md-10 col-md-offset-1">
@@ -98,10 +103,11 @@
                     {% endfor %}
                     </div>
 
+                {# Something fishy going here
                 {% elseif record.fieldtype(key) == "video" and value.responsive is defined %}
 
                     {{ value.responsive }}
-
+                #}
                 {% elseif record.fieldtype(key) == "geolocation" and value.latitude is defined %}
 
                     <div class='imageholder-wide'>
@@ -138,12 +144,18 @@
             {% endfor %}
 
             </article>
+	    <div class="col-md-10 col-md-offset-1">
+		    <div id="comments" class="comments-area indented">    
+			{{ disqus( record.title ) }}
+		    </div>
+	    </div>
 
             {# Uncomment this if you wish to dump the entire record to the client, for debugging purposes.
             {{ print(record) }}
             #}
             
         </div>
+        
 
 
     </div>
