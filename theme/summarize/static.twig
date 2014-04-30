@@ -1,0 +1,183 @@
+{% include '_header.twig' %}
+
+<!-- Main Page Content and Sidebar -->
+
+{#
+<!-- Article Navigation-->
+<div class="section section-no-margin-bottom row entries bg-primary">
+    <p class="meta">
+        {% set previous = record.previous('id') %}
+        {% if previous %}
+            <a href="{{ previous.link }}">&laquo; {{ previous.title }}</a>
+        {% endif %}
+        -
+        {% set next = record.next('id') %}
+        {% if next %}
+            <a href="{{ next.link }}">{{ next.title }} &raquo;</a>
+        {% endif %}
+    </p>
+</div>
+#}
+
+<!-- Main Blog Content -->
+<div id="content" class="content bg-base section">
+    <div class="ribbon ribbon-highlight">
+        <ol class="breadcrumb ribbon-inner">
+            <li><a href="{{ paths.root }}">Home</a></li>
+            <li class="active" title="{{ record.title }}">{{ record.slug }}</li>
+        </ol>
+    </div>
+    <div class="row">
+
+        <header class="page-header col-md-10 col-md-offset-1">
+            {#
+            <div class="page-meta pull-right hidden-xs">
+                <a href="#comments">
+                    <span class="comments-count-balloon bg-primary">123<em>Comments</em></span>
+                </a>
+            </div>
+            #}
+
+            <h2 class="page-title full-page-title">
+                {{ record.title }}
+            </h2>
+
+
+            {% if record.subtitle %}
+                <h3 class="page-title full-page-title">
+                    {{ record.subtitle }}
+                </h3>
+            {% endif %}
+
+            {{ facebooklike() }}
+            <br />
+
+            {{ twitterbutton() }}
+
+        </header>
+
+        <article class="entry style-single style-single-full type-post col-md-10 col-md-offset-1">
+
+            {% include '_recordfooter.twig' with {record: record} %}
+
+            {% for key,value in record.values if key not in ['id', 'slug', 'datecreated', 'datechanged', 'datepublish', 'datedepublish', 'username', 'status', 'title', 'subtitle'] %}
+
+                {% if record.fieldtype(key) == "image" and value != "" %}
+
+                    {% if record.image!="" %}
+                        <figure class="entry-thumbnail">
+
+                            <!-- to disable lazy loading, remove data-src and data-src-retina -->
+                            <img src="{{ thumbnail(value, 640, 480) }}" data-src="{{ thumbnail(value, 640, 480) }}" data-src-retina="{{ thumbnail(value, 1024, 680) }}" width="680" height="452" alt="">
+
+                            <!--fallback for no javascript browsers-->
+                            <noscript>
+                                <img src="{{ thumbnail(value, 640, 480) }}" alt="">
+                            </noscript>
+
+                        </figure>
+                    {% endif %}
+
+
+                {% elseif record.fieldtype(key) == "imagelist" and value != "" %}
+
+                    {% set list = attribute(record, key) %}
+
+                    <div class="gallery bg-page flushed-left">
+                        {% for item in list %}
+                            <div class="row">
+                                <div class="col-xs-3 col-sm-2">
+                                    <a href="{{ image(item.filename) }}" title="{{ item.title }}" class="thumbnail" data-rel="prettyPhoto[gallery]">
+
+                                        <!-- to disable lazy loading, remove data-src and data-src-retina -->
+                                        <img src="{{ thumbnail(item.filename, 80, 80) }}" data-src="{{ thumbnail(item.filename, 80,80) }}" data-src-retina="{{ thumbnail(item.filename, 160, 160) }}" width="80" height="80" alt="">
+
+                                        <!--fallback for no javascript browsers-->
+                                        <noscript>
+                                            <img src="{{ thumbnail(item.filename, 80, 80) }}" alt="">
+                                        </noscript>
+
+                                    </a>
+                                </div><!--/.col-xs-2.col-sm-2-->
+                            </div>
+                        {% endfor %}
+                    </div>
+
+                    {# Something fishy going here
+                    {% elseif record.fieldtype(key) == "video" and value.responsive is defined %}
+
+                        {{ value.responsive }}
+                    #}
+                {% elseif record.fieldtype(key) == "geolocation" and value.latitude is defined %}
+
+                    <div class='imageholder-wide'>
+                        <img src="http://maps.googleapis.com/maps/api/staticmap?center={{ value.latitude }},{{ value.longitude }}&amp;zoom=14&amp;size=617x300&amp;sensor=false&amp;markers={{ value.latitude }},{{ value.longitude }}">
+                    </div>
+                    <p>{{ value.formatted_address }}</p>
+
+                {% elseif record.fieldtype(key) in ['html', 'markdown', 'textarea'] %}
+                    <div class="entry-content indented">
+                        {{ attribute(record, key) }}
+                    </div>
+
+                {% elseif record.fieldtype(key) in ['html', 'markdown', 'textarea'] %}
+                    <div class="entry-content indented">
+                        {{ attribute(record, key) }}
+                    </div>
+
+
+                {% elseif record.fieldtype(key) == "select" %}
+
+                    {# special case for 'select' fields.. If it's a multiple select, the value is an array. #}
+                    <p><strong>{{ key }}: </strong>
+                        {{ attribute(record, key)|join(", ") }}
+                    </p>
+
+                {% elseif record.fieldtype(key) not in ['templateselect'] and value != "" %}
+
+                    <p><strong>{{ key }}: </strong>
+                        {{ attribute(record, key) }}
+                    </p>
+
+                {%  endif %}
+
+            {% endfor %}
+
+        </article>
+        <div class="col-md-10 col-md-offset-1">
+            <div id="comments" class="comments-area indented">
+                {{ disqus( record.title ) }}
+            </div>
+        </div>
+
+        {# Uncomment this if you wish to dump the entire record to the client, for debugging purposes.
+        {{ print(record) }}
+        #}
+
+    </div>
+
+
+
+</div>
+
+<!-- End Main Content -->
+
+</div>
+
+<!-- End Main Content and Sidebar -->
+
+{#
+            {% set relatedrecords = record.related() %}
+            {% if relatedrecords is not empty %}
+                <p class="meta">{{ __('Related content:') }}
+                <ul>
+                    {% for related in relatedrecords %}
+                        <li><a href="{{ related.link }}">{{ related.title }}</a></li>
+                    {%  endfor %}
+                </ul>
+                </p>
+            {% endif %}
+            #}
+
+
+{% include '_footer.twig' %}
